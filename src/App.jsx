@@ -14,7 +14,6 @@ function App() {
 	const [isLoading, setIsLoading] = useState(false)
 	const [forecastError, setForecastError] = useState(null)
 
-	// Добавим AbortController для отмены запросов
 	useEffect(() => {
 		const controller = new AbortController()
 		return () => controller.abort()
@@ -29,13 +28,10 @@ function App() {
 		setCurrentCity(city)
 
 		try {
-			// Запрашиваем текущую погоду
 			const current = await fetchCurrentWeather(city)
 			setCurrentWeather(current)
 
-			// Пробуем получить прогноз с задержкой
 			try {
-				// Простой вариант без race, но с таймаутом в axios
 				const forecastData = await fetchForecast(city)
 				setForecast(forecastData)
 			} catch (forecastErr) {
